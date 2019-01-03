@@ -26,4 +26,8 @@ runtest "3+5" 8
 runtest "3-5" -2
 runtest "3*5" 15
 runtest "10/5" 2
-runtest "3+4*5*4-3" 80
+runtest "3+4*5*4-10" 73
+runtest "P()" 0
+runtest "F{1}F()" 1
+runtest "F{4*5}F()" 20
+runtest "F{4*5}F()*F()" 400
