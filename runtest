@@ -11,6 +11,7 @@ runtest() {
   echo "$1 => $output"
 }
 
+echo
 echo '=== basic ==='
 runtest 0 0
 runtest 2 2
@@ -18,3 +19,10 @@ runtest 20 20
 runtest 810 810
 runtest 114514 114514
 runtest " 3" 3
+
+echo
+echo '=== arithmetic ==='
+runtest "3+5" 8
+runtest "3-5" -2
+runtest "3*5" 15
+runtest "10/5" 2

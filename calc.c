@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 
 static char *p;
 
@@ -8,14 +9,41 @@ static int skipspace(){
   return 0;
 }
 
+static int evalint() {
+  int val;
+  while(isdigit(*p) || *p == '*' || *p == '/') {
+    switch (*p) {
+      case '*':
+        break;
+      case '/':
+        break;
+      default:
+        val = *p-'0';
+        p++;
+        while(isdigit(*p)){
+          val = val*10 + *p-'0';
+          p++;
+        }
+    }
+    skipspace();
+  }
+  return val;
+}
+
 static int eval() {
   skipspace();
   if(isdigit(*p)) {
-    int val = *p-'0';
-    p++;
-    while(isdigit(*p)) {
-      val = val*10 + *p-'0';
-      p++;
+    int val = evalint();
+    skipspace();
+    while(*p == '+' || *p == '-') {
+      if (*p++ == '+'){
+      skipspace();
+      val += evalint();
+      }
+      else {
+      skipspace();
+      val -= evalint();
+      }
     }
     return val;
   }
