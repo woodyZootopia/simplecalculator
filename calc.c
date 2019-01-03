@@ -3,7 +3,13 @@
 
 static char *p;
 
+static int skipspace(){
+  while(isspace(*p)) p++;
+  return 0;
+}
+
 static int eval() {
+  skipspace();
   if(isdigit(*p)) {
     int val = *p-'0';
     p++;
