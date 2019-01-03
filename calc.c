@@ -10,13 +10,19 @@ static int skipspace(){
 }
 
 static int evalint() {
-  int val;
+  int val=0;
   while(isdigit(*p) || *p == '*' || *p == '/') {
     switch (*p) {
       case '*':
-        break;
+        p++;
+        skipspace();
+        val*=evalint();
+        continue;
       case '/':
-        break;
+        p++;
+        skipspace();
+        val/=evalint();
+        continue;
       default:
         val = *p-'0';
         p++;
@@ -36,11 +42,13 @@ static int eval() {
     int val = evalint();
     skipspace();
     while(*p == '+' || *p == '-') {
-      if (*p++ == '+'){
+      if (*p == '+'){
+      p++;
       skipspace();
       val += evalint();
       }
       else {
+      p++;
       skipspace();
       val -= evalint();
       }
