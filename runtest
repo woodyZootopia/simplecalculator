@@ -1,14 +1,19 @@
-#!/bin/zsh
+#!/bin/bash
 
 gcc -std=c11 -o calc calc.c
 
 runtest() {
   output=$(./calc "$1")
-  if ["$output" != "$2"]; then
-    echo "$1: $2 expected, but got $output"
+  if [ "$output" != "$2" ]; then
+    echo "$1 => $2 expected, but got $output"
     exit 1
   fi
   echo "$1 => $output"
 }
 
 runtest 1 1
+runtest 2 2
+runtest 3 3
+runtest 20 20
+runtest 810 810
+runtest 114514 114514
