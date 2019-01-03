@@ -26,3 +26,4 @@ runtest "3+5" 8
 runtest "3-5" -2
 runtest "3*5" 15
 runtest "10/5" 2
+runtest "3+4*5*4-3" 80

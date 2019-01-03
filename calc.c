@@ -17,12 +17,12 @@ static int evalint() {
         p++;
         skipspace();
         val*=evalint();
-        continue;
+        break;
       case '/':
         p++;
         skipspace();
         val/=evalint();
-        continue;
+        break;
       default:
         val = *p-'0';
         p++;
