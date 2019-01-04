@@ -45,3 +45,13 @@ runtest "F{a*a+b}F(3,2)" 11
 runtest "F{a*a+b}P{30}F(3,P())" 39
 runtest "F{a*a+b}P{a*a*a}F(3,P(30))" 27009
 
+# parsing ';' 
+runtest "10+2;3;3*7" 21
+runtest "F{a+b;a*b}F(1,2)" 2
+
+# print function
+runtest "?(1)" "1
+0"
+runtest "?(1);?(2)" "1
+2
+0"
