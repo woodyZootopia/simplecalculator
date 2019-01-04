@@ -1,6 +1,6 @@
 #!/bin/bash
 
-gcc -std=c11 -o calc calc.c
+gcc -std=c11 -g -o calc calc.c
 
 runtest() {
   output=$(./calc "$1")
@@ -27,7 +27,17 @@ runtest "3-5" -2
 runtest "3*5" 15
 runtest "10/5" 2
 runtest "3+4*5*4-10" 73
+
+echo
+echo '=== functions ==='
 runtest "P()" 0
 runtest "F{1}F()" 1
 runtest "F{4*5}F()" 20
-runtest "F{4*5}F()*F()" 400
+runtest "F{4*5+3}F()*F()" 529
+
+# functions with arguments
+runtest "P(1)" 0
+runtest "F{.}F(1)" 1
+runtest "F{.}F(1+2+3)" 6
+runtest "F{.*.}F(2)*F(3)" 36
+runtest "F{.*.+.}F(2)" 6

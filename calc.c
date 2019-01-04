@@ -2,7 +2,11 @@
 #include <ctype.h>
 #include <string.h>
 
+static int evalint();
+static int eval();
+
 static char *p;
+int arg;
 char funcbuf[26][100];
 
 static int skipspace(){
@@ -17,7 +21,7 @@ static int expect(char c){
 
 static int evalint() {
     int val=0;
-    while(isdigit(*p) || *p == '*' || *p == '/' || isupper(*p)) {
+    while(isdigit(*p) || *p == '*' || *p == '/' || isupper(*p) || *p == '.') {
         if (*p == '*') {
             p++;
             skipspace();
@@ -39,19 +43,39 @@ static int evalint() {
                 for(i=0;*p!='}';p++,i++){
                     funcbuf[funcid][i]=*p;
                 }
-                funcbuf[funcid][i+1]='\0'; // 同じ関数が複数回定義されたときのために終端文字で埋めておく
+                funcbuf[funcid][i+1]='\0'; // 同じ関数が複数回定義されたときのために終端文字を埋めておく
                 p++;
                 skipspace();
             }
             else if(*p == '(') {
-                char* tmp = p;
-                p=funcbuf[funcid];
-                val=evalint();
-                p=tmp+1;
-                skipspace();
                 p++;
                 skipspace();
+                if (*p != ')'){
+                    int argbuf=arg;
+                    arg=eval();
+                    char* tmp=p;
+                    p=funcbuf[funcid];
+                    val=eval();
+                    p=tmp;
+                    arg=argbuf;
+                    p++;
+                    skipspace();
+                }
+                else {
+                    char* tmp=p;
+                    p=funcbuf[funcid];
+                    val=eval();
+                    p=tmp;
+                    skipspace();
+                    p++;
+                    skipspace();
+                }
             }
+        }
+        else if (*p == '.') {
+            val = arg;
+            p++;
+            skipspace();
         }
         else {
             val = *p-'0';
@@ -67,6 +91,10 @@ static int evalint() {
 }
 
 static int eval() {
+    if(*p == '\0'){
+        p++;
+        return 0;
+    }
     skipspace();
     int val = evalint();
     skipspace();
@@ -83,8 +111,6 @@ static int eval() {
         }
     }
     return val;
-    p++;
-    return 0;
 }
 
 int main(int argc, char **argv) {
