@@ -63,7 +63,7 @@ static int evalint() {
                     val=eval();
                     p=tmp;
                     for(int j=0;j<i;j++){
-                        arg[i]=argbuf[i];
+                        arg[j]=argbuf[j];
                     }
                     p++;
                     skipspace();

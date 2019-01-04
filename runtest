@@ -42,3 +42,6 @@ runtest "F{a}F(1+2+3)" 6
 runtest "F{a*a}F(2)*F(3)" 36
 runtest "F{a*a+a}F(2)" 6
 runtest "F{a*a+b}F(3,2)" 11
+runtest "F{a*a+b}P{30}F(3,P())" 39
+runtest "F{a*a+b}P{a*a*a}F(3,P(30))" 27009
+
