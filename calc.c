@@ -105,16 +105,22 @@ static int eval() {
     skipspace();
     int val = evalint();
     skipspace();
-    while(*p == '+' || *p == '-') {
+    while(*p == '+' || *p == '-' || *p == ';') {
         if (*p == '+'){
             p++;
             skipspace();
             val += evalint();
         }
-        else {
+        else if (*p == '-'){
             p++;
             skipspace();
             val -= evalint();
+        }
+        else {
+            val=0;
+            p++;
+            skipspace();
+            val=evalint();
         }
     }
     return val;

@@ -42,3 +42,7 @@ runtest "F{a}F(1+2+3)" 6
 runtest "F{a*a}F(2)*F(3)" 36
 runtest "F{a*a+a}F(2)" 6
 runtest "F{a*a+b}F(3,2)" 11
+
+# parsing ';' 
+runtest "10+2;3;3*7" 21
+runtest "F{a+b;a*b}F(1,2)" 2
