@@ -53,18 +53,17 @@ static int evalint() {
                 if (*p != ')'){
                     int argbuf[26],i;
                     for(i=0;*p != ')' && i<26 ;i++){
-                        argbuf[i]=arg[i];
-                        arg[i]=eval();
+                        argbuf[i]=eval();
                         skipspace();
                         if(*p == ','){p++;skipspace();}
                     }
                     char* tmp=p;
                     p=funcbuf[funcid];
-                    val=eval();
-                    p=tmp;
                     for(int j=0;j<i;j++){
                         arg[j]=argbuf[j];
                     }
+                    val=eval();
+                    p=tmp;
                     p++;
                     skipspace();
                 }
