@@ -21,7 +21,7 @@ static int expect(char c){
 
 static int evalint() {
     int val=0;
-    while(isdigit(*p) || *p == '*' || *p == '/' || isalpha(*p) || *p == '.') {
+    while(isdigit(*p) || *p == '*' || *p == '/' || isalpha(*p) || *p == '?') {
         if (*p == '*') {
             p++;
             skipspace();
@@ -78,6 +78,16 @@ static int evalint() {
                     skipspace();
                 }
             }
+        }
+        else if (*p == '?') {
+            p++;
+            skipspace();
+            p++;
+            skipspace();
+            printf("%d\n",eval());
+            skipspace();
+            p++;
+            skipspace();
         }
         else if (*p >= 'a' && *p <= 'z') {
             val = arg[*p-'a'];
