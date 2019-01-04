@@ -6,7 +6,7 @@ static int evalint();
 static int eval();
 
 static char *p;
-int arg;
+int arg[26];
 char funcbuf[26][100];
 
 static int skipspace(){
@@ -21,7 +21,7 @@ static int expect(char c){
 
 static int evalint() {
     int val=0;
-    while(isdigit(*p) || *p == '*' || *p == '/' || isupper(*p) || *p == '.') {
+    while(isdigit(*p) || *p == '*' || *p == '/' || isalpha(*p) || *p == '.') {
         if (*p == '*') {
             p++;
             skipspace();
@@ -51,13 +51,20 @@ static int evalint() {
                 p++;
                 skipspace();
                 if (*p != ')'){
-                    int argbuf=arg;
-                    arg=eval();
+                    int argbuf[26],i;
+                    for(i=0;*p != ')' && i<26 ;i++){
+                        argbuf[i]=arg[i];
+                        arg[i]=eval();
+                        skipspace();
+                        if(*p == ','){p++;skipspace();}
+                    }
                     char* tmp=p;
                     p=funcbuf[funcid];
                     val=eval();
                     p=tmp;
-                    arg=argbuf;
+                    for(int j=0;j<i;j++){
+                        arg[i]=argbuf[i];
+                    }
                     p++;
                     skipspace();
                 }
@@ -72,8 +79,8 @@ static int evalint() {
                 }
             }
         }
-        else if (*p == '.') {
-            val = arg;
+        else if (*p >= 'a' && *p <= 'z') {
+            val = arg[*p-'a'];
             p++;
             skipspace();
         }
